@@ -15,22 +15,36 @@ hosts = [
 ]
 timeout = 2
 
+import sys
+
 def ping(host):
-    """Windows"""
+    """Windows i Linux"""
     try:
-        cmd = ["ping", "-n", "1", "-w", str(timeout * 1000), host]
-        #wyslij jeden pakiet i timeout 2000 ms
+        if sys.platform == "win32":
+            cmd = ["ping", "-n", "1", "-w", str(timeout * 1000), host]
+        else:
+            cmd = ["ping", "-c", "1", "-W", str(timeout), host]
+        
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
         
         if result.returncode == 0:
-            #kod 0 - sukces
             output = result.stdout
+            
+            # Windows: "czas=14ms" lub "czas<1ms"
             match = re.search(r'czas[=<]\s*([0-9.]+)', output, re.IGNORECASE)
             if match:
                 return float(match.group(1))
-            match = re.search(r'time[=]<?\s*([0-9.]+)', output, re.IGNORECASE)
+            
+            # Windows EN: "time=14ms"
+            match = re.search(r'time[=<]\s*([0-9.]+)', output, re.IGNORECASE)
             if match:
                 return float(match.group(1))
+            
+            # Linux: "time=14.2 ms"
+            match = re.search(r'time=([0-9.]+)\s*ms', output, re.IGNORECASE)
+            if match:
+                return float(match.group(1))
+        
         return None
     except Exception:
         return None
