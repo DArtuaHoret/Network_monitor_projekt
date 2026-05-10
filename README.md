@@ -1,3 +1,5 @@
+# English Below
+
 # 🖧 Network Monitor
 
 Prosty monitor sieciowy napisany w Pythonie, który sprawdza dostępność hostów 
@@ -37,3 +39,27 @@ hosts = [
 | Time | Host | IP | Status | Latency_ms | Port | Port_Status |
 |---|---|---|---|---|---|---|
 | 2026-05-07 12:00:01 | Google DNS | 8.8.8.8 | UP | 14.0 | 80 | open |
+
+
+-----------------------------------------------------------
+
+
+# 🖧 Network Monitor
+
+A simple network monitoring tool written in Python that checks host availability
+using ping and TCP port scanning, and saves the results to a CSV file.
+
+## How It Works
+
+1. Sends a single ICMP packet (ping) to each defined host
+2. Measures response time (latency in ms)
+3. Checks the availability of specified TCP ports (e.g. 53, 80)
+4. Saves all results to a CSV file with a timestamp in the filename
+
+## Python 3.x required
+
+
+## Usage
+
+```bash
+python network_monitor.py
