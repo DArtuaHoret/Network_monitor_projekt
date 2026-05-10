@@ -43,23 +43,39 @@ hosts = [
 
 -----------------------------------------------------------
 
-
 # 🖧 Network Monitor
 
-A simple network monitoring tool written in Python that checks host availability
+A simple network monitoring tool written in Python that checks host availability  
 using ping and TCP port scanning, and saves the results to a CSV file.
 
 ## How It Works
 
 1. Sends a single ICMP packet (ping) to each defined host
 2. Measures response time (latency in ms)
-3. Checks the availability of specified TCP ports (e.g. 53, 80)
+3. Checks the availability of selected TCP ports (e.g. 53, 80)
 4. Saves all results to a CSV file with a timestamp in the filename
 
-## Python 3.x required
-
+## Requires Python 3.x
 
 ## Usage
 
 ```bash
 python network_monitor.py
+```
+
+The results will be displayed in the console and saved to a file named `network_log_YYYY-MM-DD_HH-MM-SS.csv`.
+
+## Configuration
+
+The list of monitored hosts and ports can be edited directly in the script:
+
+    hosts = [
+        {"name": "Google DNS", "ip": "8.8.8.8", "ports": [53, 80]},
+        {"name": "Cloudflare DNS", "ip": "1.1.1.1", "ports": [53, 80]}
+    ]
+
+## Example CSV Output
+
+| Time | Host | IP | Status | Latency_ms | Port | Port_Status |
+|---|---|---|---|---|---|---|
+| 2026-05-07 12:00:01 | Google DNS | 8.8.8.8 | UP | 14.0 | 80 | open |
